@@ -13,6 +13,9 @@ export const theme = createTheme({
 		info: {
 			main: 'rgba(100, 196, 237, 1)',
 		},
+		success: {
+			main: '#FFFFFF',
+		},
 	},
 	typography: {
 		fontWeight: 300,

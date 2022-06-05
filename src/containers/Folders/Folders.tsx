@@ -2,10 +2,12 @@ import CloseIcon from '@mui/icons-material/Close'
 import ModeIcon from '@mui/icons-material/Mode'
 import {
 	Box,
+	Button,
 	Checkbox,
 	colors,
 	FormControlLabel,
 	Grid,
+	IconButton,
 	Stack,
 	TextField,
 	Typography,
@@ -37,13 +39,15 @@ const Folders = () => {
 					>
 						Фронтенд
 					</Typography>
-					<ModeIcon
-						sx={{
-							color: '#DFDFDF',
-							width: '20px',
-							height: '20px',
-						}}
-					/>
+					<IconButton aria-label='delete'>
+						<ModeIcon
+							sx={{
+								color: '#DFDFDF',
+								width: '20px',
+								height: '20px',
+							}}
+						/>
+					</IconButton>
 				</Stack>
 				<Stack direction='column' alignItems='flex-start' spacing={2} pt={8}>
 					<Stack direction='row' alignItems='center' spacing={2} pt={2}>
@@ -84,13 +88,15 @@ const Folders = () => {
 								</Typography>
 							}
 						/>
-						<CloseIcon
-							sx={{
-								color: '#DFDFDF',
-								width: '23px',
-								height: '23px',
-							}}
-						/>
+						<IconButton aria-label='delete'>
+							<CloseIcon
+								sx={{
+									color: '#DFDFDF',
+									width: '23px',
+									height: '23px',
+								}}
+							/>
+						</IconButton>
 					</Stack>
 				</Stack>
 				<Stack
@@ -102,7 +108,7 @@ const Folders = () => {
 				>
 					<TextField
 						id='outlined-basic'
-						label='Folder name'
+						label='Task text'
 						variant='outlined'
 						sx={{
 							background: '#FFFFFF',
@@ -111,7 +117,8 @@ const Folders = () => {
 						}}
 					/>
 					<Stack direction='row' alignItems='flex-start' spacing={2}>
-						<button
+						<Button
+							color='secondary'
 							style={{
 								background: 'rgba(77, 213, 153, 1)',
 								boxShadow: '0px 2px 20px rgba(0, 0, 0, 0.1)',
@@ -126,8 +133,9 @@ const Folders = () => {
 							>
 								Add
 							</Typography>
-						</button>
-						<button
+						</Button>
+						<Button
+							color='secondary'
 							style={{
 								background: '#E8E8E8',
 								boxShadow: '0px 2px 20px rgba(0, 0, 0, 0.1)',
@@ -142,7 +150,7 @@ const Folders = () => {
 							>
 								Cancel
 							</Typography>
-						</button>
+						</Button>
 					</Stack>
 				</Stack>
 			</Stack>
