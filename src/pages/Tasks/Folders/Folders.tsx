@@ -1,22 +1,19 @@
 import CloseIcon from '@mui/icons-material/Close'
 import ModeIcon from '@mui/icons-material/Mode'
 import {
-	Box,
-	Button,
 	Checkbox,
-	colors,
 	FormControlLabel,
 	Grid,
 	IconButton,
 	Stack,
-	TextField,
 	Typography,
 } from '@mui/material'
+import Input from '../../../components/Smart/Input'
 import './Folders.sass'
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import CircleIcon from '@mui/icons-material/Circle'
-import { v4 } from 'uuid'
+import H1 from '../../../components/ui/H1/H1'
 
 const Folders = () => {
 	return (
@@ -28,17 +25,7 @@ const Folders = () => {
 		>
 			<Stack direction='column' alignItems='flex-start' spacing={2} my={4}>
 				<Stack direction='row' alignItems='center' spacing={3}>
-					<Typography
-						sx={{
-							fontFamily: 'Montserrat',
-							fontWeight: 700,
-							fontSize: '32px',
-							lineHeight: '39px',
-							color: '#64C4ED',
-						}}
-					>
-						Фронтенд
-					</Typography>
+					<H1 text={'Фронтенд'} mB={0} />
 					<IconButton aria-label='delete'>
 						<ModeIcon
 							sx={{
@@ -106,52 +93,7 @@ const Folders = () => {
 					mt={10}
 					sx={{ width: '100%' }}
 				>
-					<TextField
-						id='outlined-basic'
-						label='Task text'
-						variant='outlined'
-						sx={{
-							background: '#FFFFFF',
-							boxShadow: '0px 2px 20px rgba(0, 0, 0, 0.1)',
-							width: '60%',
-						}}
-					/>
-					<Stack direction='row' alignItems='flex-start' spacing={2}>
-						<Button
-							color='secondary'
-							style={{
-								background: 'rgba(77, 213, 153, 1)',
-								boxShadow: '0px 2px 20px rgba(0, 0, 0, 0.1)',
-								border: '0px',
-								borderRadius: '4px',
-								padding: '13px 33px',
-							}}
-						>
-							<Typography
-								sx={{ fontWeight: '600', color: 'white' }}
-								variant='button'
-							>
-								Add
-							</Typography>
-						</Button>
-						<Button
-							color='secondary'
-							style={{
-								background: '#E8E8E8',
-								boxShadow: '0px 2px 20px rgba(0, 0, 0, 0.1)',
-								border: '0px',
-								borderRadius: '4px',
-								padding: '13px 23px',
-							}}
-						>
-							<Typography
-								sx={{ fontWeight: '600', color: '#9C9C9C' }}
-								variant='button'
-							>
-								Cancel
-							</Typography>
-						</Button>
-					</Stack>
+					<Input l1='Task text' b1='Add' b2='Cancel' widthTF='60%' />
 				</Stack>
 			</Stack>
 		</Grid>

@@ -51,7 +51,7 @@ const Menu = () => {
 		{
 			name: 'Покупки',
 			color: 'rgba(66, 184, 131, 1)',
-			active: false,
+			active: true,
 		},
 		{
 			name: 'Фронтенд',
@@ -96,6 +96,7 @@ const Menu = () => {
 						<Button
 							color='success'
 							variant='text'
+							key={v4()}
 							className={menuItem.active ? 'items_active' : 'items'}
 							style={{
 								backgroundColor: menuItem.active ? '#FFFFFF' : 'none',
@@ -109,7 +110,6 @@ const Menu = () => {
 								py={1}
 								px={3}
 								alignItems='center'
-								key={v4()}
 								sx={{ cursor: 'pointer' }}
 							>
 								<Grid item xs={1.3} alignItems='center'>
