@@ -8,15 +8,31 @@ interface InputType {
 	b2?: string
 	input2?: boolean
 	widthTF?: string
+	onChangeI1: any
+	onChangeI2: any
+	onClickB1: any
+	onClickB2?: any
 }
 
-const Input: FC<InputType> = ({ l1, l2, b1, b2, input2 = false, widthTF }) => {
+const Input: FC<InputType> = ({
+	l1,
+	l2,
+	b1,
+	b2,
+	input2 = false,
+	widthTF,
+	onChangeI1,
+	onChangeI2,
+	onClickB1,
+	onClickB2,
+}) => {
 	return (
 		<>
 			<TextField
 				id='outlined-basic'
 				label={l1}
 				variant='outlined'
+				onChange={onChangeI1}
 				sx={{
 					background: '#FFFFFF',
 					boxShadow: '0px 2px 20px rgba(0, 0, 0, 0.1)',
@@ -28,6 +44,7 @@ const Input: FC<InputType> = ({ l1, l2, b1, b2, input2 = false, widthTF }) => {
 					id='outlined-basic'
 					label={l2}
 					variant='outlined'
+					onChange={onChangeI2}
 					sx={{
 						background: '#FFFFFF',
 						boxShadow: '0px 2px 20px rgba(0, 0, 0, 0.1)',
@@ -36,6 +53,7 @@ const Input: FC<InputType> = ({ l1, l2, b1, b2, input2 = false, widthTF }) => {
 			)}
 			<Stack direction='row' alignItems='flex-start' spacing={2}>
 				<Button
+					onClick={onClickB1}
 					color='secondary'
 					style={{
 						background: 'rgba(77, 213, 153, 1)',
@@ -53,6 +71,7 @@ const Input: FC<InputType> = ({ l1, l2, b1, b2, input2 = false, widthTF }) => {
 					</Typography>
 				</Button>
 				<Button
+					onClick={onClickB2}
 					color='secondary'
 					style={{
 						background: '#E8E8E8',

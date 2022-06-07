@@ -13,26 +13,6 @@ import { v4 } from 'uuid'
 import './Menu.sass'
 import { useState } from 'react'
 
-// interface MenuType {
-// 	name: string
-// 	color: string
-// }
-
-// const menu: MenuType[] = [
-// 	{
-// 		name: 'Покупки',
-// 		color: 'rgba(66, 184, 131, 1)',
-// 	},
-// 	{
-// 		name: 'Фронтенд',
-// 		color: 'rgba(100, 196, 237, 1)',
-// 	},
-// 	{
-// 		name: 'Фильмы и сериа...',
-// 		color: 'rgba(255, 187, 204, 1)',
-// 	},
-// ]
-
 const colors: string[] = [
 	'rgba(66, 184, 131, 1)',
 	'rgba(100, 196, 237, 1)',
@@ -90,7 +70,6 @@ const Menu = () => {
 						{allTasks.name}
 					</Typography>
 				</Button>
-
 				<Stack direction='column' alignItems='flex-start' spacing={2} my={5}>
 					{menu.map(menuItem => (
 						<Button
