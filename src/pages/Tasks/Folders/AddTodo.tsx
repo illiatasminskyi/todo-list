@@ -10,7 +10,7 @@ export default function AddTodo() {
 	const handleSubmit = async (e: { preventDefault: () => void }) => {
 		e.preventDefault()
 		if (title !== '') {
-			await addDoc(collection(db, 'todos'), {
+			await addDoc(collection(db, `${user.uid}`), {
 				title,
 				completed: false,
 				userID: user.uid,

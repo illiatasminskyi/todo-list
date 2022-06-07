@@ -8,29 +8,28 @@ import Todo from './Todo'
 // firebase
 import {
 	collection,
-	query,
-	onSnapshot,
-	doc,
-	updateDoc,
 	deleteDoc,
+	doc,
+	onSnapshot,
+	query,
+	updateDoc,
 } from 'firebase/firestore'
-import { db } from '../../../core/firebase-config'
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import { UserAuth } from '../../../core/context/AuthContext'
+import { db } from '../../../core/firebase-config'
 
 const Folders = () => {
 	const [todos, setTodos] = useState<any>([])
 	const { user } = UserAuth()
 
 	useEffect(() => {
-		const q = query(collection(db, 'todos'))
+		const q = query(collection(db, `${user.uid}`))
 
 		const unsub = onSnapshot(q, querySnapshot => {
 			let todosArray: any[] = []
 			//console.log(todosArray)
 			querySnapshot.forEach(doc => {
-				if (doc.data().userID == user.uid)
-					todosArray.push({ ...doc.data(), id: doc.id })
+				todosArray.push({ ...doc.data(), id: doc.id })
 			})
 			setTodos(todosArray)
 		})
@@ -38,16 +37,16 @@ const Folders = () => {
 	}, [user])
 
 	const toggleComplete = async (todo: any) => {
-		await updateDoc(doc(db, 'todos', todo.id, user.uid), {
+		await updateDoc(doc(db, `${user.uid}`, todo.id), {
 			completed: !todo.completed,
 		})
 	}
 
 	const handleEdit = async (todo: any, title: any) => {
-		await updateDoc(doc(db, 'todos', todo.id, user.uid), { title: title })
+		await updateDoc(doc(db, `${user.uid}`, todo.id), { title: title })
 	}
 	const handleDelete = async (id: any) => {
-		await deleteDoc(doc(db, 'todos', id))
+		await deleteDoc(doc(db, `${user.uid}`, id))
 	}
 
 	return (
