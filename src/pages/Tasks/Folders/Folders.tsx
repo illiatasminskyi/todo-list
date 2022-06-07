@@ -1,20 +1,55 @@
-import CloseIcon from '@mui/icons-material/Close'
 import ModeIcon from '@mui/icons-material/Mode'
-import {
-	Checkbox,
-	FormControlLabel,
-	Grid,
-	IconButton,
-	Stack,
-	Typography,
-} from '@mui/material'
-import Input from '../../../components/Smart/Input'
-import './Folders.sass'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
-import CircleIcon from '@mui/icons-material/Circle'
+import { Grid, IconButton, Stack } from '@mui/material'
 import H1 from '../../../components/ui/H1/H1'
+import AddTodo from './AddTodo'
+import './Folders.sass'
+import Todo from './Todo'
+
+// firebase
+import {
+	collection,
+	query,
+	onSnapshot,
+	doc,
+	updateDoc,
+	deleteDoc,
+} from 'firebase/firestore'
+import { db } from '../../../core/firebase-config'
+import { useState, useEffect, useRef } from 'react'
+import { UserAuth } from '../../../core/context/AuthContext'
 
 const Folders = () => {
+	const [todos, setTodos] = useState<any>([])
+	const { user } = UserAuth()
+
+	useEffect(() => {
+		const q = query(collection(db, 'todos'))
+
+		const unsub = onSnapshot(q, querySnapshot => {
+			let todosArray: any[] = []
+			//console.log(todosArray)
+			querySnapshot.forEach(doc => {
+				if (doc.data().userID == user.uid)
+					todosArray.push({ ...doc.data(), id: doc.id })
+			})
+			setTodos(todosArray)
+		})
+		return () => unsub()
+	}, [user])
+
+	const toggleComplete = async (todo: any) => {
+		await updateDoc(doc(db, 'todos', todo.id, user.uid), {
+			completed: !todo.completed,
+		})
+	}
+
+	const handleEdit = async (todo: any, title: any) => {
+		await updateDoc(doc(db, 'todos', todo.id, user.uid), { title: title })
+	}
+	const handleDelete = async (id: any) => {
+		await deleteDoc(doc(db, 'todos', id))
+	}
+
 	return (
 		<Grid
 			item
@@ -35,65 +70,16 @@ const Folders = () => {
 						/>
 					</IconButton>
 				</Stack>
-				<Stack direction='column' alignItems='flex-start' spacing={2} pt={8}>
-					<Stack direction='row' alignItems='center' spacing={2} pt={2}>
-						<FormControlLabel
-							control={
-								<Checkbox
-									sx={{
-										'& .MuiSvgIcon-root': {
-											fontSize: 20,
-										},
-									}}
-									icon={
-										<CircleIcon
-											sx={{
-												color: 'white',
-												border: '1px solid #DFDFDF',
-												borderRadius: '50%',
-												width: '20px',
-											}}
-										/>
-									}
-									checkedIcon={
-										<CheckCircleIcon
-											sx={{
-												color: 'rgba(77, 213, 153, 1)',
-												border: '1px solid rgba(77, 213, 153, 1)',
-												borderRadius: '50%',
-												width: '20px',
-											}}
-										/>
-									}
-									defaultChecked
-								/>
-							}
-							label={
-								<Typography color='primary' variant='body1'>
-									Изучить JavaScript
-								</Typography>
-							}
-						/>
-						<IconButton aria-label='delete'>
-							<CloseIcon
-								sx={{
-									color: '#DFDFDF',
-									width: '23px',
-									height: '23px',
-								}}
-							/>
-						</IconButton>
-					</Stack>
-				</Stack>
-				<Stack
-					direction='column'
-					alignItems='flex-start'
-					spacing={2}
-					mt={10}
-					sx={{ width: '100%' }}
-				>
-					<Input l1='Task text' b1='Add' b2='Cancel' widthTF='60%' />
-				</Stack>
+				{todos.map((todo: any) => (
+					<Todo
+						key={todo.id}
+						todo={todo}
+						toggleComplete={toggleComplete}
+						handleDelete={handleDelete}
+						handleEdit={handleEdit}
+					/>
+				))}
+				<AddTodo />
 			</Stack>
 		</Grid>
 	)
