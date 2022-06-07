@@ -1,21 +1,16 @@
 import { Button, Stack, Typography } from '@mui/material'
-import { FC, useState } from 'react'
-import { auth } from '../../../core/firebase-config'
-import { onAuthStateChanged, signOut } from 'firebase/auth'
-
-interface IUser {
-	email: string
-}
+import { FC } from 'react'
+import { UserAuth } from '../../../core/context/AuthContext'
 
 const User: FC = () => {
-	const [user, setUser] = useState<IUser>({ email: '' })
+	const { user, logOut } = UserAuth()
 
-	onAuthStateChanged(auth, (currentUser: any) => {
-		setUser(currentUser)
-	})
-
-	const logOut = async () => {
-		await signOut(auth)
+	const handleSignOut = async () => {
+		try {
+			await logOut()
+		} catch (err) {
+			console.log(err)
+		}
 	}
 
 	return (
@@ -26,16 +21,18 @@ const User: FC = () => {
 			alignItems='center'
 		>
 			<Typography color='primary' variant='button'>
-				{user?.email}
+				{user?.displayName}
 			</Typography>
-			<Button
-				variant='contained'
-				color='warning'
-				sx={{ boxShadow: '0px 2px 20px rgba(0, 0, 0, 0.1)' }}
-				onClick={logOut}
-			>
-				Sign out
-			</Button>
+			{user?.displayName && (
+				<Button
+					variant='contained'
+					color='warning'
+					sx={{ boxShadow: '0px 2px 20px rgba(0, 0, 0, 0.1)' }}
+					onClick={handleSignOut}
+				>
+					Logout
+				</Button>
+			)}
 		</Stack>
 	)
 }

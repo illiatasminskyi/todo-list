@@ -10,7 +10,6 @@ import {
 } from '@mui/material'
 import Input from '../../../components/Smart/Input'
 import './Folders.sass'
-
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import CircleIcon from '@mui/icons-material/Circle'
 import H1 from '../../../components/ui/H1/H1'

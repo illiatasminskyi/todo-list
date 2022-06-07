@@ -1,3 +1,4 @@
+import CloseIcon from '@mui/icons-material/Close'
 import {
 	Box,
 	Button,
@@ -7,11 +8,10 @@ import {
 	TextField,
 	Typography,
 } from '@mui/material'
-import ListIcon from './entypoList.svg'
-import CloseIcon from '@mui/icons-material/Close'
-import { v4 } from 'uuid'
-import './Menu.sass'
 import { useState } from 'react'
+import { v4 } from 'uuid'
+import ListIcon from './entypoList.svg'
+import './Menu.sass'
 
 const colors: string[] = [
 	'rgba(66, 184, 131, 1)',
