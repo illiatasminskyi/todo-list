@@ -8,7 +8,7 @@ import {
 	TextField,
 	Typography,
 } from '@mui/material'
-import { FC, useEffect, useState } from 'react'
+import { FC, memo, useEffect, useState } from 'react'
 import { v4 } from 'uuid'
 import ListIcon from './entypoList.svg'
 import './Menu.sass'
@@ -245,4 +245,4 @@ const Menu: FC<MenuType> = ({
 	)
 }
 
-export default Menu
+export default memo(Menu)

@@ -8,11 +8,11 @@ const Tasks = () => {
 	const [activeFolder, setActiveFolder] = useState('')
 
 	// Create a new Folder
-	const addNewFolder = (userId: string, name: string, color: string) => {
-		const db = getDatabase()
-		const postFolder = ref(db, `${userId}/folder`)
-		const newFolder = push(postFolder)
-		set(newFolder, {
+	const addNewFolder = async (userId: string, name: string, color: string) => {
+		const db = await getDatabase()
+		const postFolder = await ref(db, `${userId}/folder`)
+		const newFolder = await push(postFolder)
+		await set(newFolder, {
 			folder_name: name,
 			folder_color: color === '' ? 'rgba(255, 100, 100, 1)' : color,
 		})

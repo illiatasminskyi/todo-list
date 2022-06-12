@@ -1,6 +1,6 @@
 import ModeIcon from '@mui/icons-material/Mode'
 import { Grid, IconButton, Stack } from '@mui/material'
-import { FC, useEffect, useState } from 'react'
+import { FC, memo, useEffect, useState } from 'react'
 import H1 from '../../../components/ui/H1/H1'
 import AddTodo from './AddTodo'
 import TodoItem from './TodoItem'
@@ -20,7 +20,7 @@ const Todo: FC<TodoType> = ({ activeFolder }) => {
 	// useState
 	const [todos, setTodos] = useState<any>([])
 
-	// Getting folders
+	// Getting tasks
 	useEffect(() => {
 		const getFolder = ref(db, `${user.uid}/tasks`)
 		onValue(getFolder, snapshot => {
@@ -67,4 +67,4 @@ const Todo: FC<TodoType> = ({ activeFolder }) => {
 	)
 }
 
-export default Todo
+export default memo(Todo)
