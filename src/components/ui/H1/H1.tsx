@@ -1,12 +1,13 @@
-import { Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { FC } from 'react'
 
 type H1Type = {
 	text: string
 	mB?: number
+	mL?: number
 }
 
-const H1: FC<H1Type> = ({ text, mB = 4 }) => {
+const H1: FC<H1Type> = ({ text, mB = 4, mL = 0 }) => {
 	return (
 		<Typography
 			sx={{
@@ -17,6 +18,7 @@ const H1: FC<H1Type> = ({ text, mB = 4 }) => {
 				color: '#64C4ED',
 			}}
 			mb={mB}
+			ml={mL}
 		>
 			{text}
 		</Typography>

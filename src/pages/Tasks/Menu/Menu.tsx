@@ -80,9 +80,10 @@ const Menu: FC<MenuType> = ({
 	}
 
 	// Delete folder
-	const DeleteFolder = (menuId: any) => {
-		const getFolder = ref(db, `${user.uid}/folder/${menuId}`)
-		remove(getFolder)
+	const DeleteFolder = async (menuId: any) => {
+		const getFolder = await ref(db, `${user.uid}/folder/${menuId}`)
+		await remove(getFolder)
+		await buttonSetActiveFolder('All tasks')
 	}
 
 	return (
@@ -95,12 +96,8 @@ const Menu: FC<MenuType> = ({
 			<Stack my={4}>
 				<Button
 					onClick={() => buttonSetActiveFolder(`${allTasks.name}`)}
-					color='success'
 					variant='text'
-					className={allTasks.name === activeFolder ? 'items_active' : 'items'}
 					style={{
-						backgroundColor:
-							allTasks.name === activeFolder ? '#FFFFFF' : 'transparent',
 						color: allTasks.name === activeFolder ? '#FFFFFF' : 'none',
 						justifyContent: 'flex-start',
 						padding: '17px 13px',

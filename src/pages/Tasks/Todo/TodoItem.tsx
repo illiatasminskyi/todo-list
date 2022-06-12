@@ -8,8 +8,8 @@ import {
 	Stack,
 	Typography,
 } from '@mui/material'
-import { getDatabase, push, ref, remove, set, update } from 'firebase/database'
-import { FC, memo, useState } from 'react'
+import { getDatabase, ref, remove, update } from 'firebase/database'
+import { FC, useState } from 'react'
 import { UserAuth } from '../../../core/context/AuthContext'
 
 interface TodoItemType {
@@ -38,7 +38,6 @@ const TodoItem: FC<TodoItemType> = ({ id, name, completed, folder }) => {
 	// Completed tasks
 	const CompletedTasks = (todoId: any) => {
 		const getTasksComp = ref(db, `${user.uid}/tasks/${todoId}`)
-
 		update(getTasksComp, {
 			completed: !completed,
 		})

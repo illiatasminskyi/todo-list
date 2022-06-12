@@ -1,5 +1,5 @@
 import ModeIcon from '@mui/icons-material/Mode'
-import { Grid, IconButton, Stack } from '@mui/material'
+import { Grid, IconButton, Stack, TextField } from '@mui/material'
 import { FC, memo, useEffect, useState } from 'react'
 import H1 from '../../../components/ui/H1/H1'
 import AddTodo from './AddTodo'
@@ -19,6 +19,7 @@ const Todo: FC<TodoType> = ({ activeFolder }) => {
 
 	// useState
 	const [todos, setTodos] = useState<any>([])
+	const [valueFolder, setValueFolder] = useState('Text')
 
 	// Getting tasks
 	useEffect(() => {
@@ -37,6 +38,19 @@ const Todo: FC<TodoType> = ({ activeFolder }) => {
 		})
 	}, [user])
 
+	// Functions for update name folders
+	const handleUpdateFoldser = (e: {
+		preventDefault: () => void
+		target: { value: any }
+	}) => {
+		e.preventDefault()
+		// const getFolder = ref(db, `${user.uid}/folder`)
+		const Update = async () => {
+			await setValueFolder(e.target.value)
+		}
+		Update()
+	}
+
 	return (
 		<Grid
 			item
@@ -45,22 +59,15 @@ const Todo: FC<TodoType> = ({ activeFolder }) => {
 			sx={{ backgroundColor: '#FFFFFF', borderRadius: '0 20px 20px 0' }}
 		>
 			<Stack direction='column' alignItems='flex-start' spacing={2} my={4}>
-				<Stack direction='row' alignItems='center' spacing={3} mb={2}>
-					<H1 text={'Фронтенд'} mB={0} />
-					<IconButton aria-label='delete'>
-						<ModeIcon
-							sx={{
-								color: '#DFDFDF',
-								width: '20px',
-								height: '20px',
-							}}
-						/>
-					</IconButton>
-				</Stack>
-				{todos.map((item: any) => (
-					<TodoItem {...item} key={item.id} />
-				))}
-
+				<H1 text={activeFolder} mB={0} mL={4} />
+				{todos
+					.filter(
+						(itemF: any) =>
+							itemF.folder === activeFolder || activeFolder === 'All tasks'
+					)
+					.map((item: any) => (
+						<TodoItem {...item} key={item.id} />
+					))}
 				<AddTodo activeFolder={activeFolder} />
 			</Stack>
 		</Grid>
