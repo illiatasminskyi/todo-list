@@ -20,9 +20,10 @@ const Wrapper: FC<WrapperType> = ({ children }) => {
 				item
 				container
 				sx={{
-					height: '85vh',
+					height: { xs: '100vh', md: '85vh' },
 					boxShadow: '0px 0px 20px 1px rgba(0, 0, 0, 0.12)',
-					borderRadius: '20px',
+					borderRadius: { xs: 'none', md: '20px' },
+					position: 'relative',
 				}}
 			>
 				{children}

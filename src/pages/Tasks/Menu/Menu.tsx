@@ -27,15 +27,19 @@ const colors: string[] = [
 ]
 
 interface MenuType {
-	addNewFolder: any
+	addNewFolder: (userId: string, name: string, color: string) => void
 	activeFolder: string
-	buttonSetActiveFolder: any
+	buttonSetActiveFolder: (folderProp: string) => void
+	menuBurger: boolean
+	setMenuBurger: (menuBurger: boolean) => void
 }
 
 const Menu: FC<MenuType> = ({
 	addNewFolder,
 	activeFolder,
 	buttonSetActiveFolder,
+	menuBurger,
+	setMenuBurger,
 }) => {
 	const { user } = UserAuth()
 	const db = getDatabase()
@@ -70,7 +74,7 @@ const Menu: FC<MenuType> = ({
 		target: { value: any }
 	}) => {
 		e.preventDefault()
-		setValueFolderName(e.target.value)
+		if (e.target.value.length <= 18) setValueFolderName(e.target.value)
 	}
 
 	const pushFolder = () => {
@@ -89,9 +93,15 @@ const Menu: FC<MenuType> = ({
 	return (
 		<Grid
 			item
-			md={3}
+			xs={menuBurger === true ? 12 : 0}
+			sm={menuBurger === true ? 8 : 0}
+			md={3.5}
 			p={6}
-			sx={{ backgroundColor: '#F4F6F8', borderRadius: '20px' }}
+			sx={{
+				backgroundColor: '#F4F6F8',
+				borderRadius: '20px',
+				display: { xs: menuBurger == true ? 'block' : 'none', md: 'block' },
+			}}
 		>
 			<Stack my={4}>
 				<Button
@@ -109,68 +119,73 @@ const Menu: FC<MenuType> = ({
 						{allTasks.name}
 					</Typography>
 				</Button>
-				<Stack direction='column' alignItems='flex-start' spacing={2} my={5}>
-					{menu.map((menuItem: any) => (
-						<Box
-							onClick={() => buttonSetActiveFolder(`${menuItem.name}`)}
-							key={v4()}
-							className={
-								menuItem.name === activeFolder ? 'items_active' : 'items'
-							}
-							style={{
-								backgroundColor:
-									menuItem.name === activeFolder ? '#FFFFFF' : 'none',
-								color: menuItem.name === activeFolder ? '#FFFFFF' : 'none',
-								width: '100%',
-							}}
-						>
-							<Grid
-								container
-								direction='row'
-								py={1}
-								px={3}
-								alignItems='center'
-								sx={{ cursor: 'pointer' }}
+				{menu.length > 0 && (
+					<Stack direction='column' alignItems='flex-start' spacing={2} my={5}>
+						{menu.map((menuItem: any) => (
+							<Box
+								onClick={() => {
+									buttonSetActiveFolder(`${menuItem.name}`)
+									setMenuBurger(false)
+								}}
+								key={v4()}
+								className={
+									menuItem.name === activeFolder ? 'items_active' : 'items'
+								}
+								style={{
+									backgroundColor:
+										menuItem.name === activeFolder ? '#FFFFFF' : 'none',
+									color: menuItem.name === activeFolder ? '#FFFFFF' : 'none',
+									width: '100%',
+								}}
 							>
-								<Grid item xs={1.3} alignItems='center'>
-									<Box
-										sx={{
-											width: '10px',
-											height: '10px',
-											borderRadius: '50%',
-											backgroundColor: `${menuItem.color}`,
-										}}
-									/>
-								</Grid>
 								<Grid
-									item
-									xs={9}
+									container
+									direction='row'
+									py={1}
+									px={3}
 									alignItems='center'
-									justifyContent='flex-start'
-									textAlign='left'
+									sx={{ cursor: 'pointer' }}
 								>
-									<Typography color='primary' variant='button' align='left'>
-										{menuItem.name}
-									</Typography>
-								</Grid>
-								<Grid item xs={1}>
-									<IconButton
-										aria-label='delete'
-										onClick={() => DeleteFolder(menuItem.id)}
-									>
-										<CloseIcon
+									<Grid item xs={1.3} alignItems='center'>
+										<Box
 											sx={{
-												color: 'rgba(180, 180, 180, 1)',
-												width: '16px',
-												height: '15px',
+												width: '10px',
+												height: '10px',
+												borderRadius: '50%',
+												backgroundColor: `${menuItem.color}`,
 											}}
 										/>
-									</IconButton>
+									</Grid>
+									<Grid
+										item
+										xs={9}
+										alignItems='center'
+										justifyContent='flex-start'
+										textAlign='left'
+									>
+										<Typography color='primary' variant='button' align='left'>
+											{menuItem.name}
+										</Typography>
+									</Grid>
+									<Grid item xs={1}>
+										<IconButton
+											aria-label='delete'
+											onClick={() => DeleteFolder(menuItem.id)}
+										>
+											<CloseIcon
+												sx={{
+													color: 'rgba(180, 180, 180, 1)',
+													width: '16px',
+													height: '15px',
+												}}
+											/>
+										</IconButton>
+									</Grid>
 								</Grid>
-							</Grid>
-						</Box>
-					))}
-				</Stack>
+							</Box>
+						))}
+					</Stack>
+				)}
 				<Stack direction='column' alignItems='flex-start' spacing={2} mt={5}>
 					<TextField
 						type='text'
@@ -187,32 +202,42 @@ const Menu: FC<MenuType> = ({
 						}}
 						disabled={menu.length >= 8 ? true : false}
 					/>
-					<Stack
+					<Grid
+						container
 						direction='row'
 						alignItems='center'
 						justifyContent='center'
-						spacing={1}
 						py={2}
 					>
 						{colors.map(color => (
-							<IconButton
-								aria-label='color'
+							<Grid
+								item
 								key={v4()}
-								onClick={() => setValueFolderColor(`${color}`)}
-								disabled={menu.length >= 8 ? true : false}
+								xs={2}
+								sx={{
+									display: 'flex',
+									alignItems: 'center',
+									justifyContent: 'center',
+								}}
 							>
-								<Box
-									sx={{
-										width: '20px',
-										height: '20px',
-										borderRadius: '50%',
-										backgroundColor: `${color}`,
-										boxShadow: '0px 2px 20px rgba(0, 0, 0, 0.1)',
-									}}
-								/>
-							</IconButton>
+								<IconButton
+									aria-label='color'
+									onClick={() => setValueFolderColor(`${color}`)}
+									disabled={menu.length >= 8 ? true : false}
+								>
+									<Box
+										sx={{
+											width: '20px',
+											height: '20px',
+											borderRadius: '50%',
+											backgroundColor: `${color}`,
+											boxShadow: '0px 2px 20px rgba(0, 0, 0, 0.1)',
+										}}
+									/>
+								</IconButton>
+							</Grid>
 						))}
-					</Stack>
+					</Grid>
 					<Button
 						onClick={pushFolder}
 						color='secondary'

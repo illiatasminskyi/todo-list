@@ -1,5 +1,4 @@
-import ModeIcon from '@mui/icons-material/Mode'
-import { Grid, IconButton, Stack, TextField } from '@mui/material'
+import { Grid, Stack } from '@mui/material'
 import { FC, memo, useEffect, useState } from 'react'
 import H1 from '../../../components/ui/H1/H1'
 import AddTodo from './AddTodo'
@@ -11,9 +10,10 @@ import { UserAuth } from '../../../core/context/AuthContext'
 
 interface TodoType {
 	activeFolder: string
+	menuBurger: boolean
 }
 
-const Todo: FC<TodoType> = ({ activeFolder }) => {
+const Todo: FC<TodoType> = ({ activeFolder, menuBurger }) => {
 	const { user } = UserAuth()
 	const db = getDatabase()
 
@@ -38,25 +38,17 @@ const Todo: FC<TodoType> = ({ activeFolder }) => {
 		})
 	}, [user])
 
-	// Functions for update name folders
-	const handleUpdateFoldser = (e: {
-		preventDefault: () => void
-		target: { value: any }
-	}) => {
-		e.preventDefault()
-		// const getFolder = ref(db, `${user.uid}/folder`)
-		const Update = async () => {
-			await setValueFolder(e.target.value)
-		}
-		Update()
-	}
-
 	return (
 		<Grid
 			item
 			p={8}
-			md={9}
-			sx={{ backgroundColor: '#FFFFFF', borderRadius: '0 20px 20px 0' }}
+			xs={menuBurger == true ? 0 : 12}
+			md={8.5}
+			sx={{
+				backgroundColor: '#FFFFFF',
+				borderRadius: { xs: '20px', md: '0 20px 20px 0' },
+				display: { xs: menuBurger == true ? 'none' : 'block', md: 'block' },
+			}}
 		>
 			<Stack direction='column' alignItems='flex-start' spacing={2} my={4}>
 				<H1 text={activeFolder} mB={0} mL={4} />

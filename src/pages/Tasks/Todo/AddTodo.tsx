@@ -33,7 +33,7 @@ const AddTodo: FC<AddTodoType> = ({ activeFolder }) => {
 		target: { value: any }
 	}) => {
 		e.preventDefault()
-		setValueTaskName(e.target.value)
+		if (e.target.value.length <= 30) setValueTaskName(e.target.value)
 	}
 
 	const pushTask = () => {
@@ -53,7 +53,7 @@ const AddTodo: FC<AddTodoType> = ({ activeFolder }) => {
 				sx={{
 					background: '#FFFFFF',
 					boxShadow: '0px 2px 20px rgba(0, 0, 0, 0.1)',
-					width: '60%',
+					width: { xs: '100%', sm: '80%', md: '60%' },
 				}}
 			/>
 			<Stack direction='row' alignItems='flex-start' spacing={2} mt={2}>
