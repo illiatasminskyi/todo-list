@@ -37,13 +37,16 @@ const AddTodo: FC<AddTodoType> = ({ activeFolder }) => {
 	}
 
 	const pushTask = () => {
-		addNewTask(valueTaskName, false, activeFolder)
-		setValueTaskName('')
+		if (valueTaskName.length >= 1 && valueTaskName !== ' ') {
+			addNewTask(valueTaskName, false, activeFolder)
+			setValueTaskName('')
+		}
 	}
 
 	return (
 		<Box sx={{ width: '100%' }} pt={4}>
 			<TextField
+				onKeyDown={e => (e.key === 'Enter' ? pushTask() : null)}
 				type='text'
 				value={valueTaskName}
 				onChange={handleChangeTask}

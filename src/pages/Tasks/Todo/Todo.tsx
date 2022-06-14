@@ -7,6 +7,7 @@ import TodoItem from './TodoItem'
 // firebase
 import { getDatabase, onValue, ref } from 'firebase/database'
 import { UserAuth } from '../../../core/context/AuthContext'
+import User from '../../../components/Smart/User'
 
 interface TodoType {
 	activeFolder: string
@@ -48,6 +49,8 @@ const Todo: FC<TodoType> = ({ activeFolder, menuBurger }) => {
 				backgroundColor: '#FFFFFF',
 				borderRadius: { xs: '20px', md: '0 20px 20px 0' },
 				display: { xs: menuBurger == true ? 'none' : 'block', md: 'block' },
+				overflowY: 'scroll',
+				height: { xs: '100vh', md: '85vh' },
 			}}
 		>
 			<Stack direction='column' alignItems='flex-start' spacing={2} my={4}>
@@ -62,6 +65,7 @@ const Todo: FC<TodoType> = ({ activeFolder, menuBurger }) => {
 					))}
 				<AddTodo activeFolder={activeFolder} />
 			</Stack>
+			<User />
 		</Grid>
 	)
 }

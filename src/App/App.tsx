@@ -9,7 +9,7 @@ function App() {
 		<AuthContextProvider>
 			<BrowserRouter>
 				<Container maxWidth='lg'>
-					<User />
+					{/* <User /> */}
 					<Router />
 				</Container>
 			</BrowserRouter>

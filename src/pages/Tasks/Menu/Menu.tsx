@@ -74,13 +74,15 @@ const Menu: FC<MenuType> = ({
 		target: { value: any }
 	}) => {
 		e.preventDefault()
-		if (e.target.value.length <= 18) setValueFolderName(e.target.value)
+		if (e.target.value.length <= 15) setValueFolderName(e.target.value)
 	}
 
 	const pushFolder = () => {
-		addNewFolder(user.uid, valueFolderName, valueFolderColor)
-		setValueFolderName('')
-		setValueFolderColor('')
+		if (valueFolderName.length >= 1 && valueFolderName !== ' ') {
+			addNewFolder(user.uid, valueFolderName, valueFolderColor)
+			setValueFolderName('')
+			setValueFolderColor('')
+		}
 	}
 
 	// Delete folder
@@ -188,6 +190,7 @@ const Menu: FC<MenuType> = ({
 				)}
 				<Stack direction='column' alignItems='flex-start' spacing={2} mt={5}>
 					<TextField
+						onKeyDown={e => (e.key === 'Enter' ? pushFolder() : null)}
 						type='text'
 						value={valueFolderName}
 						onChange={handleChangeFoldser}

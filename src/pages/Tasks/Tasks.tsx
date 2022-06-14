@@ -10,7 +10,6 @@ import CloseIcon from '@mui/icons-material/Close'
 const Tasks = () => {
 	const [activeFolder, setActiveFolder] = useState('All tasks')
 	const [menuBurger, setMenuBurger] = useState(false)
-	console.log(activeFolder)
 
 	// Create a new Folder
 	const addNewFolder = async (userId: string, name: string, color: string) => {
