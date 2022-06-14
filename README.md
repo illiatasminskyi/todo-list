@@ -3,8 +3,7 @@
 ![Todo List](./src/assets/img/TodoList.png "Todo List")
 
 ```
-An application for planning and viewing 
-the execution of planned, 
+An application for planning and viewing the execution of planned, 
 with the ability to sort tasks into folders.
 ```
 
