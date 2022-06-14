@@ -14,8 +14,8 @@ import ListIcon from './entypoList.svg'
 import './Menu.sass'
 
 // firebase
+import { getDatabase, onValue, ref, remove } from 'firebase/database'
 import { UserAuth } from '../../../core/context/AuthContext'
-import { getDatabase, ref, onValue, remove } from 'firebase/database'
 
 const colors: string[] = [
 	'rgba(66, 184, 131, 1)',
@@ -46,8 +46,8 @@ const Menu: FC<MenuType> = ({
 	// useState
 	const [valueFolderName, setValueFolderName] = useState('')
 	const [valueFolderColor, setValueFolderColor] = useState('')
-	const [menu, setMenu] = useState<any>([])
-	const [allTasks, setAllTasks] = useState({
+	const [menu, setMenu] = useState<string[]>([])
+	const [allTasks] = useState({
 		name: 'All tasks',
 		active: false,
 	})
@@ -66,15 +66,15 @@ const Menu: FC<MenuType> = ({
 			})
 			setMenu(folderArray)
 		})
-	}, [user])
+	}, [db, user])
 
 	// Functions for creating new folders
 	const handleChangeFoldser = (e: {
 		preventDefault: () => void
-		target: { value: any }
+		target: { value: string }
 	}) => {
 		e.preventDefault()
-		if (e.target.value.length <= 15) setValueFolderName(e.target.value)
+		if (e.target.value.length <= 16) setValueFolderName(e.target.value)
 	}
 
 	const pushFolder = () => {
@@ -86,7 +86,7 @@ const Menu: FC<MenuType> = ({
 	}
 
 	// Delete folder
-	const DeleteFolder = async (menuId: any) => {
+	const DeleteFolder = async (menuId: string) => {
 		const getFolder = await ref(db, `${user.uid}/folder/${menuId}`)
 		await remove(getFolder)
 		await buttonSetActiveFolder('All tasks')
@@ -102,7 +102,9 @@ const Menu: FC<MenuType> = ({
 			sx={{
 				backgroundColor: '#F4F6F8',
 				borderRadius: '20px',
-				display: { xs: menuBurger == true ? 'block' : 'none', md: 'block' },
+				display: { xs: menuBurger === true ? 'block' : 'none', md: 'block' },
+				overflowY: 'auto',
+				height: { xs: '100vh', md: '85vh' },
 			}}
 		>
 			<Stack my={4}>

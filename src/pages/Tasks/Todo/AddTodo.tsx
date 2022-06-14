@@ -10,7 +10,6 @@ interface AddTodoType {
 }
 
 const AddTodo: FC<AddTodoType> = ({ activeFolder }) => {
-	const [title, setTitle] = useState('')
 	const { user } = UserAuth()
 
 	// useState
@@ -30,7 +29,7 @@ const AddTodo: FC<AddTodoType> = ({ activeFolder }) => {
 
 	const handleChangeTask = (e: {
 		preventDefault: () => void
-		target: { value: any }
+		target: { value: string }
 	}) => {
 		e.preventDefault()
 		if (e.target.value.length <= 30) setValueTaskName(e.target.value)

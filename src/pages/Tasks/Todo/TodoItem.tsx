@@ -23,20 +23,20 @@ const TodoItem: FC<TodoItemType> = ({ id, name, completed, folder }) => {
 	const { user } = UserAuth()
 	const db = getDatabase()
 
-	const [taskItem, setTaskItem] = useState({
+	const [taskItem] = useState({
 		name: name,
 		completed: completed,
 		folder: folder,
 	})
 
 	// Delete tasks
-	const DeleteTasks = (todoId: any) => {
+	const DeleteTasks = (todoId: string) => {
 		const getTasks = ref(db, `${user.uid}/tasks/${todoId}`)
 		remove(getTasks)
 	}
 
 	// Completed tasks
-	const CompletedTasks = (todoId: any) => {
+	const CompletedTasks = (todoId: string) => {
 		const getTasksComp = ref(db, `${user.uid}/tasks/${todoId}`)
 		update(getTasksComp, {
 			completed: !completed,

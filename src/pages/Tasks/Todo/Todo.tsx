@@ -19,8 +19,7 @@ const Todo: FC<TodoType> = ({ activeFolder, menuBurger }) => {
 	const db = getDatabase()
 
 	// useState
-	const [todos, setTodos] = useState<any>([])
-	const [valueFolder, setValueFolder] = useState('Text')
+	const [todos, setTodos] = useState<string[]>([])
 
 	// Getting tasks
 	useEffect(() => {
@@ -37,19 +36,19 @@ const Todo: FC<TodoType> = ({ activeFolder, menuBurger }) => {
 			})
 			setTodos(taskArray)
 		})
-	}, [user])
+	}, [db, user])
 
 	return (
 		<Grid
 			item
 			p={8}
-			xs={menuBurger == true ? 0 : 12}
+			xs={menuBurger === true ? 0 : 12}
 			md={8.5}
 			sx={{
 				backgroundColor: '#FFFFFF',
 				borderRadius: { xs: '20px', md: '0 20px 20px 0' },
-				display: { xs: menuBurger == true ? 'none' : 'block', md: 'block' },
-				overflowY: 'scroll',
+				display: { xs: menuBurger === true ? 'none' : 'block', md: 'block' },
+				overflowY: 'auto',
 				height: { xs: '100vh', md: '85vh' },
 			}}
 		>
