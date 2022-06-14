@@ -8,6 +8,7 @@ import TodoItem from './TodoItem'
 import { getDatabase, onValue, ref } from 'firebase/database'
 import { UserAuth } from '../../../core/context/AuthContext'
 import User from '../../../components/Smart/User'
+import MotionDiv from '../../../components/Smart/MotionDiv'
 
 interface TodoType {
 	activeFolder: string
@@ -52,19 +53,26 @@ const Todo: FC<TodoType> = ({ activeFolder, menuBurger }) => {
 				height: { xs: '100vh', md: '85vh' },
 			}}
 		>
-			<Stack direction='column' alignItems='flex-start' spacing={2} my={4}>
-				<H1 text={activeFolder} mB={0} mL={4} />
-				{todos
-					.filter(
-						(itemF: any) =>
-							itemF.folder === activeFolder || activeFolder === 'All tasks'
-					)
-					.map((item: any) => (
-						<TodoItem {...item} key={item.id} />
-					))}
-				<AddTodo activeFolder={activeFolder} />
-			</Stack>
-			<User />
+			<MotionDiv variant='vX' PX={100}>
+				<Stack direction='column' alignItems='flex-start' spacing={2} my={4}>
+					<H1 text={activeFolder} mB={0} mL={4} />
+					{todos
+						.filter(
+							(itemF: any) =>
+								itemF.folder === activeFolder || activeFolder === 'All tasks'
+						)
+						.map((item: any) => (
+							<MotionDiv variant='vY' PX={50} key={item.id}>
+								<TodoItem {...item} />
+							</MotionDiv>
+						))}
+
+					<AddTodo activeFolder={activeFolder} />
+				</Stack>
+			</MotionDiv>
+			<MotionDiv variant='vX' PX={50}>
+				<User />
+			</MotionDiv>
 		</Grid>
 	)
 }
